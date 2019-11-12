@@ -20,6 +20,8 @@
 #include <memory>
 // For std::unique_ptr
 
+#include <iostream>
+
 template<typename ValType>
 struct Node 
 { 
@@ -38,6 +40,15 @@ struct Node
     ~Node() = default;
 }; 
 
+template<typename ValType>
+std::unique_ptr<Node<ValType>> & newNode(ValType key)
+{
+	std::unique_ptr<Node<ValType>> newN;
+	newN->_key = key;
+	newN->_left = nullptr;
+	newN->_right = nullptr;
+	return newN;
+}
 
 
 // treesort
@@ -53,14 +64,15 @@ void treesort(FDIter first, FDIter last)
 {
     // ValType is the type that FDIter points to
     using ValType = typename std::iterator_traits<FDIter>::value_type;
-    std::vector<ValType> buff(std::distance(first, last));
+    std::vector<ValType> range(std::distance(first, last));
     std::vector<ValType> buffer;
-    std::move(first, last, buff.begin());
+    std::move(first, last, range.begin());
     std::unique_ptr<Node<ValType>> root = nullptr;
-    root = std::move(insert(root,buff[0]));
-    for(auto i = 1; i < buff.size(); i++)
+	std::cout << "IF you can see this we are about to insert a node into root" << std::endl;
+    root = std::move(insert(root,*range.begin()));
+    for(auto i = 1; i < range.size(); i++)
     {
-        insert(root,buff[i]);
+        insert(root,range[i]);
     }
     traverse(root,buffer);
     std::move(buffer.begin(), buffer.end(), first);
@@ -70,10 +82,10 @@ void treesort(FDIter first, FDIter last)
 template<typename ValType>
  std::unique_ptr<Node<ValType>> & insert(std::unique_ptr<Node<ValType>> & node, ValType & key)
 {
+	 std::cout << "If you see this we are beginning insert" << std::endl;
     if (node == nullptr)
     {
-        node->_key = key;
-        return node;
+        return newNode(key);
     } 
   
     /* Otherwise, recur down the tree */
