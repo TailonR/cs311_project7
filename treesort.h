@@ -92,7 +92,7 @@ template<typename ValType>
 template<typename ValType>
 void traverse(std::unique_ptr<Node<ValType>> & root, std::vector<ValType> & buffer)
 {
-    if (root != NULL) 
+    if (root != nullptr) 
     { 
         traverse(root->_left, buffer); 
         buffer.push_back(root->_key); 
