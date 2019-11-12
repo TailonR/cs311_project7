@@ -53,15 +53,39 @@ void treesort(FDIter first, FDIter last)
 {
     // ValType is the type that FDIter points to
     using ValType = typename std::iterator_traits<FDIter>::value_type;
-
-    // THE FOLLOWING IS DUMMY CODE. IT WILL PASS ALL TESTS, BUT IT DOES
-    // NOT MEET THE REQUIREMENTS OF THE PROJECT.
     std::vector<ValType> buff(std::distance(first, last));
     std::move(first, last, buff.begin());
-    std::stable_sort(buff.begin(), buff.end());
+    std::unique_ptr<Node<ValType>> root = nullptr;
+    root = insert(root,buff[0]);
+    for(auto i = 1; i < buff.size(); i++)
+    {
+        insert(root,buff[i]);
+    }
     std::move(buff.begin(), buff.end(), first);
 }
 
+
+template<typename ValType>
+ Node<ValType> * insert(std::unique_ptr<Node<ValType>> & node, ValType & key)
+{
+    if (node == nullptr)
+    {
+        node->_key = key;
+        return node.get();
+    } 
+  
+    /* Otherwise, recur down the tree */
+    if (key < node->_key) 
+    {
+        node->_left = insert(node->_left, key); 
+    }
+    else if (key > node->_key) 
+    {
+        node->_right = insert(node->_right, key); 
+  
+    }
+    return node.get(); 
+}
 
 
 
