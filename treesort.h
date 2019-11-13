@@ -71,7 +71,6 @@ template<typename ValType>
     {
         node = std::make_unique<Node<ValType>>(key);
     }   
-    /* Otherwise, recur down the tree */
     else if (key < node->_key) 
     {
         insert(node->_left, key); 
