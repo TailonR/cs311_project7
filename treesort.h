@@ -43,10 +43,10 @@ struct Node
 template<typename ValType>
 std::unique_ptr<Node<ValType>> & newNode(ValType key)
 {
-	std::unique_ptr<Node<ValType>> newN;
-	newN->_key = key;
-	newN->_left = nullptr;
-	newN->_right = nullptr;
+	auto newN = std::make_unique<Node<ValType>>(key);
+	//newN->_key = key;
+	//newN->_left = nullptr;
+	//newN->_right = nullptr;
 	return newN;
 }
 
@@ -88,7 +88,7 @@ template<typename ValType>
     if (node == nullptr)
     {
 		//node->_key = key;
-		//return newNode(key);
+		return newNode(key);
     } 
   
     /* Otherwise, recur down the tree */
