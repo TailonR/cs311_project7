@@ -23,6 +23,9 @@
 #include <memory>
 // For std::unique_ptr
 
+
+//Struct for a basic Binary Search Tree
+// 
 template<typename ValType>
 struct Node 
 { 
@@ -45,8 +48,8 @@ std::unique_ptr<Node<ValType>> newNode(const ValType & key)
 
 
 // treesort
-// Sort a given range using Treesort.
-// Pre:
+// DESC: Sort a given range using Treesort.
+// PRE:
 //     ???
 // Requirements on Types:
 //     ???
@@ -65,7 +68,10 @@ void treesort(FDIter first, FDIter last)
     traverse(root,first);
 }
 
-
+// Insert
+// DESC: Inserts a key into a binary search tree
+// PRE:
+// ERROR:
 template<typename ValType>
  void insert(std::unique_ptr<Node<ValType>> & node, const ValType & key)
 {
@@ -84,6 +90,11 @@ template<typename ValType>
     }
 
 }
+
+// Taverse
+// DESC: Does an inorder traverse of a binary search tree. 
+// PRE: Root must be the root of a valid binary search tree. First must be a valid forward iterator
+// ERROR: 
 
 template<typename ValType,typename FDIter>
 void traverse(std::unique_ptr<Node<ValType>> & root, FDIter & first)
