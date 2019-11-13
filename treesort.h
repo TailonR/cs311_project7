@@ -39,14 +39,6 @@ struct Node
     ~Node() = default;
 }; 
 
-template<typename ValType>
-std::unique_ptr<Node<ValType>> newNode(const ValType & key)
-{
-	auto newN = std::make_unique<Node<ValType>>(key);
-	return newN;
-}
-
-
 // treesort
 // DESC: Sort a given range using Treesort.
 // PRE:
@@ -77,7 +69,7 @@ template<typename ValType>
 {
     if (node == nullptr)
     {
-        node = newNode(key);
+        node = std::make_unique<Node<ValType>>(key);
     }   
     /* Otherwise, recur down the tree */
     else if (key < node->_key) 
