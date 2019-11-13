@@ -68,8 +68,11 @@ void treesort(FDIter first, FDIter last)
     std::vector<ValType> endResult;
     std::move(first, last, range.begin());
     std::unique_ptr<Node<ValType>> root = nullptr;
-	std::cout << "IF you can see this we are about to insert a node into root" << std::endl;
-    root = std::move(insert(root,*range.begin()));
+	if (range.size() > 0)
+	{
+		std::move(insert(root,range[0]));
+	}
+
     for(auto i = 1; i < range.size(); i++)
     {
         insert(root,range[i]);
@@ -82,10 +85,10 @@ void treesort(FDIter first, FDIter last)
 template<typename ValType>
  std::unique_ptr<Node<ValType>> & insert(std::unique_ptr<Node<ValType>> & node, ValType & key)
 {
-	 std::cout << "If you see this we are beginning insert" << std::endl;
     if (node == nullptr)
     {
-        return newNode(key);
+		//node->_key = key;
+		//return newNode(key);
     } 
   
     /* Otherwise, recur down the tree */
