@@ -24,8 +24,12 @@
 // For std::unique_ptr
 
 
-//Struct for a basic Binary Search Tree
-// 
+// struct BST Node
+// Binary Search Node, with client-specified value type
+// Invariants:
+//     Either _left,_right is null or _left._right points to an BSTNode, 
+// Requirements on Types:
+//     ValType must have a copy ctor and a (non-throwing) dctor.
 template<typename ValType>
 struct Node 
 { 
