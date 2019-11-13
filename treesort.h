@@ -26,15 +26,15 @@ template<typename ValType>
 struct Node 
 { 
     ValType _key; 
-    std::unique_ptr<Node> _left;
-    std::unique_ptr<Node> _right; 
+    std::unique_ptr<Node<ValType>> _left;
+    std::unique_ptr<Node<ValType>> _right; 
 
-    explicit Node(const ValType & key,
-                std::unique_ptr<Node> & left = nullptr,
-                std::unique_ptr<Node> & right = nullptr)
-        :_key(key),
-        _left(std::move(left)),
-        _right(std::move(right))
+    explicit Node(const ValType & key): _key(key) //,
+                //std::unique_ptr<Node<ValType>> & left = nullptr,
+                //std::unique_ptr<Node<ValType>> & right = nullptr)
+        //:_key(key),
+        //_left(std::move(left)),
+       // _right(std::move(right))
     {}
 
     ~Node() = default;
@@ -43,6 +43,7 @@ struct Node
 template<typename ValType>
 std::unique_ptr<Node<ValType>> & newNode(ValType key)
 {
+	//std::unique_ptr<Node<ValType>> newN(key);
 	auto newN = std::make_unique<Node<ValType>>(key);
 	//newN->_key = key;
 	//newN->_left = nullptr;
@@ -68,17 +69,20 @@ void treesort(FDIter first, FDIter last)
     std::vector<ValType> endResult;
     std::move(first, last, range.begin());
     std::unique_ptr<Node<ValType>> root = nullptr;
-	if (range.size() > 0)
+	if (range.size() == 0)
 	{
-		std::move(insert(root,range[0]));
+		
 	}
-
-    for(auto i = 1; i < range.size(); i++)
-    {
-        insert(root,range[i]);
-    }
-    traverse(root,endResult);
-    std::move(endResult.begin(), endResult.end(), first);
+	else
+	{
+		std::move(insert(root, range[0]));
+		for (auto i = 1; i < range.size(); i++)
+		{
+			insert(root, range[i]);
+		}
+		traverse(root, endResult);
+		std::move(endResult.begin(), endResult.end(), first);
+	}
 }
 
 
@@ -88,6 +92,7 @@ template<typename ValType>
     if (node == nullptr)
     {
 		//node->_key = key;
+		//return node;
 		return newNode(key);
     } 
   
