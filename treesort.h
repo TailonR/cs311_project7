@@ -57,19 +57,17 @@ void treesort(FDIter first, FDIter last)
 {
     // ValType is the type that FDIter points to
     using ValType = typename std::iterator_traits<FDIter>::value_type;
-    std::vector<ValType> endResult;
     std::unique_ptr<Node<ValType>> root;
     for (auto i = first; i != last; i++)
     {
         insert(root, *i);
     }
-    traverse(root, endResult);
-    std::move(endResult.begin(), endResult.end(), first);
+    traverse(root,first);
 }
 
 
 template<typename ValType>
- void insert(std::unique_ptr<Node<ValType>> & node, ValType & key)
+ void insert(std::unique_ptr<Node<ValType>> & node, const ValType & key)
 {
     if (node == nullptr)
     {
@@ -87,14 +85,14 @@ template<typename ValType>
 
 }
 
-template<typename ValType>
-void traverse(std::unique_ptr<Node<ValType>> & root, std::vector<ValType> & endResult)
+template<typename ValType,typename FDIter>
+void traverse(std::unique_ptr<Node<ValType>> & root, FDIter & first)
 {
     if (root != nullptr) 
     { 
-        traverse(root->_left, endResult); 
-        endResult.push_back(root->_key); 
-        traverse(root->_right, endResult); 
+        traverse(root->_left, first); 
+        *first++ = root->_key;
+        traverse(root->_right, first); 
     } 
 }
 
